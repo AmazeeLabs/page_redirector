@@ -3,20 +3,29 @@
 /**
  * @file
  * A module that behaves like a central point of redirections on the site.
+ *
+ * @todo: Export the view in a default views file.
  */
+
+function redirector_entity_info() {
+  $return = array(
+    'redirector_test' => array(
+      'label' => t('Redirector Test'),
+      'controller class' => 'RedirectorTestEntityController',
+      'base table' => 'redirector_tests',
+      'entity keys' => array(
+        'id' => 'tid',
+        'label' => 'title',
+      ),
+    ),
+  );
+  return $return;
+}
 
 /**
  * Implements hook_menu();
  */
 function redirector_menu() {
-  $items['admin/config/system/redirector'] = array(
-    'title' => 'Redirector',
-    'description' => 'Manages and tests the redirects for your site.',
-    'access arguments' => array('administer site'),
-    'page callback' => 'redirector_admin_overview',
-    'file' => 'redirector.admin.inc',
-    'type' => MENU_NORMAL_ITEM,
-  );
   $items['admin/config/system/redirector/tests'] = array(
     'title' => 'Tests',
     'type' => MENU_DEFAULT_LOCAL_TASK,

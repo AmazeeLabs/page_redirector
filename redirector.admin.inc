@@ -75,6 +75,8 @@ function redirector_add_edit_test_page($form, $form_state, $test = NULL) {
 function redirector_add_edit_test_page_submit(&$form, &$form_state) {
   // @todo: load the test if we have a test id.
   $redirect_test = new stdClass();
+  $redirect_test->created = REQUEST_TIME;
+
   $redirect_test->title = $form_state['values']['title'];
   $redirect_test->source_configuration = $form_state['values']['source_configuration'];
   $redirect_test->expected_configuration = $form_state['values']['expected_configuration'];

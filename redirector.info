@@ -11,3 +11,4 @@ files[] = classes/RedirectorSourceConfiguratorURL.inc
 files[] = classes/RedirectorSourceConfiguratorBrowserLanguage.inc
 files[] = classes/RedirectorExpectedConfiguratorURL.inc
 files[] = classes/RedirectorExpectedConfiguratorStatusCode.inc
+files[] = controllers/RedirectorTestEntityController.inc

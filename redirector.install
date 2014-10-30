@@ -39,6 +39,12 @@ function redirector_schema() {
         'serialize' => TRUE,
         'description' => 'A serialized array of configuration to be expected, like reponse code, redirect URL, etc',
       ),
+      'created' => array(
+        'description' => 'The Unix timestamp the test was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
     ),
     'primary key' => array('tid'),
   );
