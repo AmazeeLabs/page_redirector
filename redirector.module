@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * @file
+ * A module that behaves like a central point of redirections on the site.
+ */
+
+/**
+ * Implements hook_menu();
+ */
+function redirector_menu() {
+  $items['admin/config/system/redirector'] = array(
+    'title' => 'Redirector',
+    'description' => 'Manages and tests the redirects for your site.',
+    'access arguments' => array('administer site'),
+    'page callback' => 'redirector_admin_overview',
+    'file' => 'redirector.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/config/system/redirector/tests'] = array(
+    'title' => 'Tests',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/config/system/redirector/add'] = array(
+    'title' => 'Add redirect test',
+    'access arguments' => array('administer site'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('redirector_add_edit_test_page'),
+    'file' => 'redirector.admin.inc',
+    'type' => MENU_LOCAL_ACTION,
+  );
+  return $items;
+}
+
+/**
+ * Return all the source configurators.
+ */
+function redirector_get_source_configurators() {
+  $configurators = module_invoke_all('redirector_source_configurators');
+  drupal_alter('redirector_source_configurators', $configurators);
+  return $configurators;
+}
+
+/**
+ * Return all the expected configurators.
+ */
+function redirector_get_expected_configurators() {
+  $configurators = module_invoke_all('redirector_expected_configurators');
+  drupal_alter('redirector_expected_configurators', $configurators);
+  return $configurators;
+}
+
+/**
+ * Implements hook_redirector_source_configurators().
+ *
+ * @todo: document this hook in an api file.
+ */
+function redirector_redirector_source_configurators() {
+  return array(
+    'source_url' => array(
+      'class' => 'RedirectorSourceConfiguratorURL',
+    ),
+    'browser_language' => array(
+      'class' => 'RedirectorSourceConfiguratorBrowserLanguage',
+    ),
+  );
+}
+
+/**
+ * Implements hook_redirector_expected_configurators().
+ *
+ * @todo: document this hook in an api file.
+ */
+function redirector_redirector_expected_configurators() {
+  return array(
+    'expected_url' => array(
+      'class' => 'RedirectorExpectedConfiguratorURL',
+    ),
+    'expected_status_code' => array(
+      'class' => 'RedirectorExpectedConfiguratorStatusCode',
+    ),
+  );
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function redirector_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'redirector') . '/includes/views',
+  );
+}

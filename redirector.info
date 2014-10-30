@@ -1,0 +1,13 @@
+name = Redirector
+description = A module that behaves like a central point of redirections on the site.
+core = 7.x
+
+dependencies[] = views
+dependencies[] = views_bulk_operations
+
+files[] = interfaces/RedirectorSourceConfiguratorInterface.inc
+files[] = interfaces/RedirectorExpectedConfiguratorInterface.inc
+files[] = classes/RedirectorSourceConfiguratorURL.inc
+files[] = classes/RedirectorSourceConfiguratorBrowserLanguage.inc
+files[] = classes/RedirectorExpectedConfiguratorURL.inc
+files[] = classes/RedirectorExpectedConfiguratorStatusCode.inc

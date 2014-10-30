@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * @file
+ *  Install file for the domain_redirector module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function redirector_schema() {
+  $schema['redirector_tests'] = array(
+    'description' => 'Stores the configured tests.',
+    'fields' => array(
+      'tid' => array(
+        'description' => 'The primary identifier for a test.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' => 'A title for the test.',
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'source_configuration' => array(
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'A serialized array of configuration to be used in the request, like URL, browser language or additional query parameters.',
+      ),
+      'expected_configuration' => array(
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'A serialized array of configuration to be expected, like reponse code, redirect URL, etc',
+      ),
+    ),
+    'primary key' => array('tid'),
+  );
+
+  $schema['redirector_tests_sessions'] = array(
+    'description' => 'Stores information about the tests sessions that run',
+    'fields' => array(
+      'tsid' => array(
+        'description' => 'The primary identifier for a session.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp the session was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('tsid'),
+  );
+
+  $schema['redirector_tests_results'] = array(
+    'description' => 'Stores the detailed results of the tests.',
+    'fields' => array(
+      'trid' => array(
+        'description' => 'The primary identifier for a test result.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'tid' => array(
+        'description' => 'The identifier for a test.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'tsid' => array(
+        'description' => 'The identifier of the test session.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'success' => array(
+        'description' => 'If the test was successful, 1 if yes, 0 if no',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'report' => array(
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'A serialized array containing some detailed report of the test run.',
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp when the test result was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('trid'),
+    'foreign keys' => array(
+      'results_test' => array(
+        'table' => 'redirector_tests',
+        'columns' => array('tid' => 'tid'),
+      ),
+      'results_session' => array(
+        'table' => 'redirector_tests_sessions',
+        'columns' => array('tsid' => 'tsid'),
+      ),
+    ),
+    'indexes' => array(
+      'tsid' => array('tsid'),
+      'tid' => array('tid'),
+    ),
+  );
+  return $schema;
+}
