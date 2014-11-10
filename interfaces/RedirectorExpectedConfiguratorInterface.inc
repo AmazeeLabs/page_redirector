@@ -7,5 +7,5 @@
 
 interface RedirectorExpectedConfiguratorInterface {
 
-  public static function getFormElements();
+  public static function getFormElements($redirect_test = NULL);
 }

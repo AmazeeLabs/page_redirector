@@ -74,5 +74,21 @@ function redirector_views_data() {
       'handler' => 'views_handler_sort_date',
     ),
   );
+
+  $data['redirector_tests']['edit_test'] = array(
+    'field' => array(
+      'title' => t('Edit link'),
+      'help' => t('Provide a simple link to the edit the test.'),
+      'handler' => 'views_handler_field_redirector_test_edit_link',
+    ),
+  );
+
+  $data['redirector_tests']['run_test'] = array(
+    'field' => array(
+      'title' => t('Run link'),
+      'help' => t('Provide a simple link to the run the test.'),
+      'handler' => 'views_handler_field_redirector_test_run_link',
+    ),
+  );
   return $data;
 }

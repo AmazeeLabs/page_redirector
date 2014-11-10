@@ -25,7 +25,7 @@ function redirector_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
-      'source_configuration' => array(
+      'target_configuration' => array(
         'type' => 'blob',
         'not null' => FALSE,
         'size' => 'big',

@@ -38,15 +38,38 @@ function redirector_menu() {
     'file' => 'redirector.admin.inc',
     'type' => MENU_LOCAL_ACTION,
   );
+  $items['admin/config/system/redirector/edit/%redirector'] = array(
+    'title' => 'Edit redirect test',
+    'access arguments' => array('administer site'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('redirector_add_edit_test_page', 5),
+    'file' => 'redirector.admin.inc',
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/config/system/redirector/run/%redirector'] = array(
+    'title' => 'Run redirect test',
+    'access arguments' => array('administer site'),
+    'page callback' => 'redirector_run_test_page',
+    'page arguments' => array(5),
+    'file' => 'redirector.admin.inc',
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
 /**
- * Return all the source configurators.
+ * Loads a redirect test entity.
  */
-function redirector_get_source_configurators() {
-  $configurators = module_invoke_all('redirector_source_configurators');
-  drupal_alter('redirector_source_configurators', $configurators);
+function redirector_load($id) {
+  return entity_load_single('redirector_test', $id);
+}
+
+/**
+ * Return all the target configurators.
+ */
+function redirector_get_target_configurators() {
+  $configurators = module_invoke_all('redirector_target_configurators');
+  drupal_alter('redirector_target_configurators', $configurators);
   return $configurators;
 }
 
@@ -60,17 +83,17 @@ function redirector_get_expected_configurators() {
 }
 
 /**
- * Implements hook_redirector_source_configurators().
+ * Implements hook_redirector_target_configurators().
  *
  * @todo: document this hook in an api file.
  */
-function redirector_redirector_source_configurators() {
+function redirector_redirector_target_configurators() {
   return array(
-    'source_url' => array(
-      'class' => 'RedirectorSourceConfiguratorURL',
+    'target_url' => array(
+      'class' => 'RedirectorTargetConfiguratorURL',
     ),
     'browser_language' => array(
-      'class' => 'RedirectorSourceConfiguratorBrowserLanguage',
+      'class' => 'RedirectorTargetConfiguratorBrowserLanguage',
     ),
   );
 }

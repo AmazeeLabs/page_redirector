@@ -5,10 +5,13 @@ core = 7.x
 dependencies[] = views
 dependencies[] = views_bulk_operations
 
-files[] = interfaces/RedirectorSourceConfiguratorInterface.inc
+files[] = interfaces/RedirectorTargetConfiguratorInterface.inc
 files[] = interfaces/RedirectorExpectedConfiguratorInterface.inc
-files[] = classes/RedirectorSourceConfiguratorURL.inc
-files[] = classes/RedirectorSourceConfiguratorBrowserLanguage.inc
+files[] = classes/RedirectorTargetConfiguratorURL.inc
+files[] = classes/RedirectorTargetConfiguratorBrowserLanguage.inc
 files[] = classes/RedirectorExpectedConfiguratorURL.inc
 files[] = classes/RedirectorExpectedConfiguratorStatusCode.inc
 files[] = controllers/RedirectorTestEntityController.inc
+files[] = includes/views/views_handler_field_redirector_test_edit_link.inc
+files[] = includes/views/views_handler_field_redirector_test_run_link.inc
+files[] = includes/views/views_handler_field_redirector_test_link.inc
